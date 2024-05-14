@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dynamic Form</title>
+  </head>
+  <body>
+    <div id="root"></div>
+  </body>
+  <script src="https://www.unpkg.com/react@18.2.0/umd/react.development.js"></script>
+  <script src="https://www.unpkg.com/react-dom@18.2.0/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script type="text/babel">
+    const { useState } = React;
+
+    function DynamicForm() {
+      const [hobbies, setHobbies] = useState(['']);
+
+      const handleHobbyChange = (index, event) => {
+        const newHobbies = [...hobbies];
+        newHobbies[index] = event.target.value;
+        setHobbies(newHobbies);
+      };
+
+      const addHobby = () => {
+        setHobbies([...hobbies, '']);
+      };
+
+      const removeHobby = (index) => {
+        if (hobbies.length > 1) {
+          const newHobbies = hobbies.filter((_, i) => i !== index);
+          setHobbies(newHobbies);
+        }
+      };
+
+      const handleSubmit = (event) => {
+        event.preventDefault();
+        console.log('Hobbies:', hobbies);
+      };
+
+      return (
+        <form onSubmit={handleSubmit}>
+          <h3>HOBBIES</h3>
+          {hobbies.map((hobby, index) => (
+            <div key={index} style={{ marginBottom: '10px' }}>
+              <input
+                type="text"
+                value={hobby}
+                onChange={(e) => handleHobbyChange(index, e)}
+              />
+              <button type="button" onClick={() => removeHobby(index)} disabled={hobbies.length === 1}>
+                Remove
+              </button>
+            </div>
+          ))}
+          <button type="button" onClick={addHobby}>
+            Add Hobby
+          </button>
+          <button type="submit">Submit</button>
+        </form>
+      );
+    }
+
+    ReactDOM.render(<DynamicForm />, document.getElementById('root'));
+  </script>
+</html>
