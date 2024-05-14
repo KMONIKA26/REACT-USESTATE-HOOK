@@ -1,7 +1,5 @@
 # REACT-USESTATE-HOOK
 
-# REACT-USESTATE-HOOK
-
 ## State Management Techniques and useState Hook ##
 
 #### 1. Color Picker
